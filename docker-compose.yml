@@ -17,6 +17,8 @@ services:
   db:
     container_name: mysql_container
     build: ./infra/db
+    ports:
+      - 9001:3306
     volumes:
       - db-store:/var/lib/mysql
 

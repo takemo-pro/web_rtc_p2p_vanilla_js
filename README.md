@@ -12,8 +12,8 @@
 ### デフォルト使用ポート
 
 - php -> 非公開
-- web -> localhost:9000
-- db -> localhost:9001
+- web -> localhost:20000
+- db -> localhost:20001
 
 ### DBデフォルト設定
 

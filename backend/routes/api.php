@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//todo: csrf
+Route::post('sample_signaling',\App\Http\Controllers\Api\SampleSignalingController::class);

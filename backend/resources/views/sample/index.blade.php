@@ -28,6 +28,8 @@
 
 </body>
 
+<script src="{{mix('js/app.js')}}"></script>
+
 <script type="text/javascript">
     let localVideo = document.getElementById('local_video');
     let remoteVideo = document.getElementById('remote_video');

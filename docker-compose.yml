@@ -5,11 +5,13 @@ services:
     build: ./infra/php
     volumes:
       - ./backend:/work
+    ports:
+      - "6001:6001"
   web:
     container_name: web_voice_chat_sample_nginx_container
     image: nginx:1.20-alpine
     ports:
-      - 20000:80
+      - "20000:80"
     volumes:
       - ./backend:/work
       - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
@@ -18,7 +20,7 @@ services:
     container_name: web_voice_chat_sample_mysql_container
     build: ./infra/db
     ports:
-      - 20001:3306
+      - "20001:3306"
     volumes:
       - db-store:/var/lib/mysql
 

@@ -12,6 +12,7 @@
             <v-spacer/>
             <v-btn
                 icon
+                v-if="isLoggedIn"
                 @click="logout"
             >
                 <v-icon>mdi-logout</v-icon>
@@ -43,6 +44,9 @@ export default {
     computed: {
         isLoading(){
             return this.$store.state.global.isLoading;
+        },
+        isLoggedIn(){
+            return this.$store.getters["auth/isLoggedIn"];
         }
     },
     methods: {

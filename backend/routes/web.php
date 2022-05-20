@@ -13,6 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('sample.index2');
-});
+//SPA
+Route::view('{any}','index')->where('any','.*');

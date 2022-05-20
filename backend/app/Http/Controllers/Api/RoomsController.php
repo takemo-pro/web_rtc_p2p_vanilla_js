@@ -11,7 +11,7 @@ class RoomsController extends Controller
 {
     public function index()
     {
-        return response()->json(Room::all());
+        return response()->success(Room::all());
     }
 
     public function store(CreateRequest $request)
@@ -24,7 +24,7 @@ class RoomsController extends Controller
             'max_user_count' => 5,
             'is_private' => false,
         ]);
-        return response()->json($newRoom);
+        return response()->success($newRoom);
     }
 
     public function destroy(string $roomId)

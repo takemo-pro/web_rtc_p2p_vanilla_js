@@ -2,7 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Http\InvalidRequestException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -45,6 +51,33 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (Throwable $e,Request $request) {
+            if($request->is('api/*')){
+                if($e instanceof NotFoundHttpException){
+                    return response()->error($e);
+                }
+
+                if($e instanceof ValidationException){
+                    return response()->validationError($e);
+                }
+
+                if($e instanceof InvalidRequestException){
+                    return response()->json([
+                        'message' => '入力に誤りがあります',
+                        'errors' => [
+                            'global' => $e->getMessage(),
+                        ]
+                    ],422);
+                }
+
+                if($e instanceof HttpExceptionInterface){
+                    return response()->error($e);
+                }
+
+                return response()->error($e);
+            }
         });
     }
 }

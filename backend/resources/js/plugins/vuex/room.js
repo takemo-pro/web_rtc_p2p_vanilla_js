@@ -1,6 +1,6 @@
 const store = {
     state: ()=>({
-        // activeRooms: [],
+        activeRooms: [],
         currentRoom: null,
     }),
     getters: {
@@ -9,17 +9,27 @@ const store = {
         }
     },
     mutations: {
-        // setActiveRooms(state,rooms){
-        //     state.activeRooms = rooms;
-        // },
+        setActiveRooms(state,rooms){
+            state.activeRooms = rooms;
+        },
         setCurrentRoom(state,room){
             state.currentRoom = room;
         }
     },
     actions: {
-        // getActiveRooms(context){
-        //     return axios.get('room');
-        // }
+        async createMyRoom(context,data){
+            await axios.post('room',data).then(res => {
+                context.commit('setCurrentRoom',res.data.data);
+            });
+            await axios.get('room').then(res => {
+                context.commit('setActiveRooms',res.data.data);
+            });
+        },
+        async getActiveRooms(context){
+            await axios.get('room').then(res => {
+                context.commit('setActiveRooms',res.data.data);
+            });
+        }
     },
     namespaced: true,
 }

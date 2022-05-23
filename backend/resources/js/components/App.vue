@@ -79,8 +79,7 @@ div#skeleton_loader{
     animation: 1s ease-in 0.5s;
 }
 
-div#global_progress_bar{
+div#global_progress_bar,div#progress_bar,div#circle_loader{
     z-index: 10000;
 }
-
 </style>

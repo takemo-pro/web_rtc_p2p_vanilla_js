@@ -4,6 +4,7 @@ import Router from "vue-router";
 import Register from "../components/users/Register";
 import Login from "../components/users/Login";
 import RoomIndex from "../components/rooms/Index";
+import RoomShow from "../components/rooms/Show";
 
 Vue.use(Router);
 
@@ -15,6 +16,10 @@ const routes = [
     {
         path: '/room',
         component: RoomIndex,
+    },
+    {
+        path: '/room/show',
+        component: RoomShow,
     },
     {
         path: '/register',

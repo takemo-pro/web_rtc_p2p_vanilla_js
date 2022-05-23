@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Room\CreateRequest;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RoomsController extends Controller
 {
     public function index()
     {
-        return response()->success(Room::all());
+        $activeRooms = Room::query()->whereNot('host_user_id',Auth::guard('web')->id())->get();
+        return response()->success($activeRooms);
     }
 
     public function store(CreateRequest $request)

@@ -18,7 +18,11 @@ class EventServiceProvider extends ServiceProvider
 //        Registered::class => [
 //            SendEmailVerificationNotification::class,
 //        ],
-        \App\Events\ReceivedSdpMessage::class => [
+        \App\Events\OfferSdp::class => [
+        ],
+        \App\Events\AnswerSdp::class => [
+        ],
+        \App\Events\IceCandidate::class => [
         ],
     ];
 

@@ -14,15 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
-//todo: csrf
-Route::post('sample_signaling',\App\Http\Controllers\Api\SampleSignalingController::class);
 
 Route::group([
-    'middleware' => 'auth:sanctum',
+//    'middleware' => 'auth:sanctum',
 ],function(){
     Route::get('me',[\App\Http\Controllers\Api\UsersController::class,'currentUser'])->name('me');
     Route::group([
@@ -30,8 +24,27 @@ Route::group([
         'as' => 'room.',
     ],function(){
         Route::get('',[\App\Http\Controllers\Api\RoomsController::class,'index'])->name('index');
+        Route::get('{roomId}',[\App\Http\Controllers\Api\RoomsController::class,'show'])->name('show');
         Route::post('',[\App\Http\Controllers\Api\RoomsController::class,'store'])->name('store');
         Route::delete('{roomId}',[\App\Http\Controllers\Api\RoomsController::class,'destroy'])->name('destroy');
-    });
 
+        Route::group([
+            'prefix' => '{roomId}'
+        ],function(){
+//            Route::put('{roomId}/join',[\App\Http\Controllers\Api\RoomsController::class,'join'])->name('join');
+            Route::post('offer',[\App\Http\Controllers\Api\SignalingController::class,'offer'])->name('offer');
+            Route::post('answer',[\App\Http\Controllers\Api\SignalingController::class,'answer'])->name('answer');
+            Route::post('ice_candidate',[\App\Http\Controllers\Api\SignalingController::class,'iceCandidate'])->name('ice_candidate');
+        });
+
+        Route::group([
+            'prefix' => '{roomId}/connection_unit',
+            'as' => 'connection_unit.',
+        ],function (){
+            Route::get('',[\App\Http\Controllers\Api\ConnectionUnitsController::class,'index'])->name('index');
+            Route::get('{connectionUnitId}',[\App\Http\Controllers\Api\ConnectionUnitsController::class,'show'])->name('show');
+            Route::post('',[\App\Http\Controllers\Api\ConnectionUnitsController::class,'store'])->name('store');
+            Route::delete('{connectionUnitId}',[\App\Http\Controllers\Api\ConnectionUnitsController::class,'destroy'])->name('destroy');
+        });
+    });
 });

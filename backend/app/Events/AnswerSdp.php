@@ -11,24 +11,26 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ReceivedSdpMessage implements ShouldBroadcastNow
+class AnswerSdp implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public array $sdp;
-    public string $roomId;
-    public string $userId;
+    public $roomId;
+    public $answerUserId;
+    public $targetUserId;
+    public $sdp;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(string $roomId,array $sdp,string $userId)
+    public function __construct($roomId,$answerUserId,$targetUserId,$sdp)
     {
         $this->roomId = $roomId;
+        $this->answerUserId = $answerUserId;
+        $this->targetUserId = $targetUserId;
         $this->sdp = $sdp;
-        $this->userId = $userId;
     }
 
     /**
@@ -38,6 +40,6 @@ class ReceivedSdpMessage implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new Channel('Rooms');
+        return new Channel("room.{$this->roomId}.{$this->targetUserId}");
     }
 }

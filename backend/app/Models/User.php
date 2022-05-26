@@ -41,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * note: 実際は1ユーザーが参加できる部屋は1部屋
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function rooms(){
+        return $this->belongsToMany(Room::class, 'room_users');
+    }
 }

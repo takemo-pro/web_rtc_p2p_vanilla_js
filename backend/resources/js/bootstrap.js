@@ -1,4 +1,3 @@
-window.utils = require('./sample/utils');
 window._ = require('lodash');
 
 /**

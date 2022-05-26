@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('Rooms', function ($user) {
-    return true;
-});
+//Broadcast::channel('room/{roomId}/{targetUserId}', function ($user,$roomId,$targetUserId) {
+//    //todo : authorization
+//    return true;
+//});

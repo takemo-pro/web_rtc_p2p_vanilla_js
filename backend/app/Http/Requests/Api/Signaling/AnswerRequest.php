@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Room;
+namespace App\Http\Requests\Api\Signaling;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRequest extends FormRequest
+class AnswerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,9 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','max:255','string'],
+            'local_user_id' => 'required|exists:connection_units,id',
+            'remote_user_id' => 'required|exists:connection_units,id',
+            'sdp' => 'required|array',
         ];
     }
 }

@@ -14,7 +14,8 @@ use Illuminate\Support\Str;
  * @property string $name
  * @property integer $max_user_count
  * @property boolean $is_private
- * @property User $user
+ * @property ConnectionUnit $hostConnectionUnit
+ * @property ConnectionUnit[] $connectionUnits
  */
 class Room extends Model
 {
@@ -36,7 +37,7 @@ class Room extends Model
      * @var array
      */
     protected $fillable = [
-        'host_user_id',
+        'host_connection_user_id',
         'created_at',
         'updated_at',
         'name',
@@ -55,8 +56,16 @@ class Room extends Model
     /**
      * @return BelongsTo
      */
-    public function user()
+    public function hostConnectionUnit()
     {
-        return $this->belongsTo('App\Models\User', 'host_user_id');
+        return $this->belongsTo(ConnectionUnit::class, 'host_connection_unit_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function connectionUnits()
+    {
+        return $this->hasMany(ConnectionUnit::class);
     }
 }
